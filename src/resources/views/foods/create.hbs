@@ -1,0 +1,22 @@
+<div class="mt-4">
+    <h3>Thông tin món ăn</h3>
+    <form method="POST" action="/foods/{{id}}/insert">
+        <div class="form-group">
+            <label for="name">Tên món ăn</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        {{!-- <div class="form-group">
+            <label for="name">Mã món</label>
+            <input type="text" class="form-control" id="id" name="id" value="{{result">
+        </div> --}}
+         <div class="form-group">
+            <label for="description">Đơn giá</label>
+            <input class="form-control" id="dongia" name="dongia">
+        </div>
+         <div class="form-group">
+            <label for="videoID">img</label>
+            <input type="text" class="form-control" id="img" name="img">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
+    </form>
+</div>

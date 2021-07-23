@@ -1,0 +1,99 @@
+<h1>Biểu đồ thông kê của cửa hàng</h1>
+
+<div class="container-monan">
+
+    <h4>Biểu đồ thống kê số lượng món ăn bán được</h4>
+    <canvas id="doughnut-chart" awidth="800" height="450"></canvas>
+</div>
+
+<div class="container-doanhso">
+     <h4>Biểu đồ thống kê doanh thu của quán trong 1 năm</h4>
+    <canvas id="myChart" width="500" height="300"></canvas>  
+</div>
+
+<script>
+     document.addEventListener("DOMContentLoaded", ()=>{
+
+         var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+         };
+        //console.log(typeof `{{foodsname}}`);
+        var ten = `{{name}}`; 
+        var tenmon = ten.split(',');
+        var soluong = `{{soluong}}`
+        soluong = soluong.split(',');
+        var sl = [];
+        var color = [];
+        var i =0;
+        for(let i = 0; i < soluong.length; i++){
+            sl.push(Number(soluong[i]));
+            color.push(dynamicColors());
+        }
+        console.log(sl);
+        new Chart(document.getElementById("doughnut-chart"), {
+            type: 'doughnut',
+            data: {
+            labels:  tenmon,
+            datasets: [
+                {
+                label: "Population (millions)",
+                backgroundColor: color,
+                data: sl
+                }
+            ]
+            },
+            options: {
+            title: {
+                display: true,
+                text: 'Đỗ thị tỷ lệ dân số thế giới'
+            }
+            }
+        });
+        var doanhthu =  `{{doanhthu}}`;
+        doanhthu = doanhthu.split(',');
+
+        var xValues = ['January','February','March','April','May','June','June','August','September','October','November','December'];
+        var yValues = [];
+
+        for(let i = 0; i < doanhthu.length; i++){
+            yValues.push(Number(doanhthu[i]));
+        }
+
+        new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+            label: 'This year',
+            fill: false,
+            lineTension: 0,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderWidth: 3,
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'round',
+            borderJoinStyle: 'round',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 3,
+            pointHitRadius: 20,
+            pointStyle: 'circle',
+            data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            scales: {
+            yAxes: [{ticks: {min: 6, max:16}}],
+            }
+        }
+        });
+     })
+</script>

@@ -1,0 +1,33 @@
+<div class="mt-4">
+    <h3>Tạo mới nhân viên</h3>
+    <form method="POST" action="/manage/personnel/{{id}}/insert">
+        <div class="form-group">
+            <label for="name">Tên nhân viên</label>
+            <input type="text" class="form-control" id="name" name="name" >
+        </div>
+        {{!-- <div class="form-group">
+            <label for="name">Mã món</label>
+            <input type="text" class="form-control" id="id" name="id" value="{{result">
+        </div> --}}
+         <div class="form-group">
+            <label for="description">giới tính   :</label>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" checked="checked" id="customRadioInline1" name="gioitinh" value="F" class="custom-control-input form-control">
+                <label class="custom-control-label" for="customRadioInline1">Nam</label>
+            </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="gioitinh" value="M" class="custom-control-input form-control">
+                <label class="custom-control-label" for="customRadioInline2">Nữ</label>
+            </div>
+        </div>
+         <div class="form-group">
+            <label for="sdt">số điện thoại</label>
+            <input type="text" class="form-control" id="sdt" name="sdt">
+        </div>
+        <div class="form-group">
+            <label for="ngaysinh">ngày sinh</label>
+            <input type="date" class="form-control" id="ngaysinh" name="ngaysinh">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
+    </form>
+</div>

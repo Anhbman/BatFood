@@ -1,0 +1,20 @@
+<div class="mi-4">
+        <div class="row">
+        {{# each foods}}
+        <div class="col-sm-6 col-lg-4">
+            <div class="card card-course-item" >
+                <a href="/food/{{this.monid}}">
+                    <img class="card-img-top img-food img-thumbnail" src="{{this.img}}" alt="{{this.name}}">
+                </a> 
+                <div class="card-body">
+                    <a href="/courses/{{this.monid}}">
+                        <h5 class="card-title">{{this.tenmon}}</h5>
+                    </a>
+                    <p class="card-text">{{this.dongia}}</p>
+                    <a href="#" class="btn btn-primary">Chi tiết món ăn</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

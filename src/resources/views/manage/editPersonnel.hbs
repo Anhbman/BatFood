@@ -1,0 +1,57 @@
+<div class="mt-4">
+    <h3>Chỉnh sửa thông tin nhân viên</h3>
+    <form method="POST" action="/manage/personnel/{{nhanvien.nhanvienid}}/update?_method=PUT">
+        <div class="form-group">
+            <label for="name">Tên khách hàng</label>
+            <input type="text" class="form-control" id="name" value="{{nhanvien.hoten}}" name="name" >
+        </div>
+        {{!-- <div class="form-group">
+            <label for="name">Mã món</label>
+            <input type="text" class="form-control" id="id" name="id" value="{{result">
+        </div> --}}
+         <div class="form-group">
+            <label for="description">giới tính   :</label>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" checked="checked" id="customRadioInline1" name="gioitinh" value="F" class="custom-control-input form-control">
+                <label class="custom-control-label" for="customRadioInline1">Nam</label>
+            </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="gioitinh" value="M" class="custom-control-input form-control">
+                <label class="custom-control-label" for="customRadioInline2">Nữ</label>
+            </div>
+        </div>
+         <div class="form-group">
+            <label for="sdt">số điện thoại</label>
+            <input type="text" class="form-control" id="sdt" value="{{nhanvien.sdt}}" name="sdt">
+        </div>
+         <div class="form-group">
+            <label for="ngaysinh">ngày sinh</label>
+            <input type="date" value="{{nhanvien.ngaysinh}}" class="form-control" id="ngaysinh" name="ngaysinh">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
+    </form>
+</div>
+
+<script>
+    function setInputDate(_id){
+    var _dat = document.querySelector(_id);
+    var hoy = new Date(),
+        d = hoy.getDate(),
+        m = hoy.getMonth()+1, 
+        y = hoy.getFullYear(),
+        data;
+
+    if(d < 10){
+        d = "0"+d;
+    };
+    if(m < 10){
+        m = "0"+m;
+    };
+
+    data = y+"-"+m+"-"+d;
+    console.log(data);
+    _dat.value = data;
+};
+
+//setInputDate("#ngaysinh");
+</script>
