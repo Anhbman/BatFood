@@ -5,7 +5,7 @@ class FoodController {
 
     // GET /foods/stored
     async storedFoods(req, res){
-      await  models.monan.findAll({
+      await models.monan.findAll({
               })
                 .then( result => {
                   var foods = result.map((currentValue) => {
@@ -16,6 +16,9 @@ class FoodController {
                 .catch(err => console.log('Error storedfood: ' + err));
           }
 
+    showFoodID(req, res){
+      res.json('Mon an');
+    }
     // DELETE /foods/:id/delete
     async deleteFoods(req, res){
         await models.monan.destroy({
@@ -58,7 +61,6 @@ class FoodController {
 
   //GET /foods/create
   async createFood(req, res, next) {
-
     await models.monan.findAll()
           .then(result => {
             var id = result.length + 1;

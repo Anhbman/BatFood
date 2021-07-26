@@ -163,8 +163,8 @@ class ManageController{
         .catch(err => console.log('ERROR showCustomerID: ' + err))
     }
 
-    deletePersonnel(req, res) {
-      models.nhanvien.destroy({
+    async deletePersonnel(req, res) {
+      await models.nhanvien.destroy({
         where: {
           nhanvienid: `${req.params.id}`
         }
@@ -174,15 +174,15 @@ class ManageController{
       res.redirect('back');
     }
 
-    deleteCustomer(req, res) {
-      models.khachhang.destroy({
+    async deleteCustomer(req, res) {
+      await models.khachhang.destroy({
         where: {
           khachhangid: `${req.params.id}`
         }
       })
         .then()
         .catch(err => console.log('ERROR deleteCustomer: ' + err))
-      res.redirect('back')
+      res.redirect(`back`)
     }
 }
 

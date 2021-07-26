@@ -4,6 +4,6 @@ const route = express.Router();
 const siteController = require('../app/controller/SiteController');
 
 
-route.get('/home', siteController.show);
+route.get('/', siteController.show);
 
 module.exports = route;

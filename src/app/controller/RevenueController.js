@@ -9,6 +9,16 @@ class RevenueController{
       var foodsname;
       var foodssl;
       var doanhthu;
+      var totalHD;
+      var totaldoanhthu;
+
+      models.hoadon.findAndCountAll()
+        .then(result => {
+          totalHD = result.count;
+          totaldoanhthu = result.rows.reduce((total, currentValue) => {
+            return total + currentValue.tongtien;
+          }, 0)
+        })
       
       await Sequelize.query(`select m.tenmon, sum(soluong) "Soluong",sum(soluong)*dongia "tongtien"
                       from monan m,phieudat p, banpv b
@@ -32,7 +42,7 @@ class RevenueController{
               });
           })
           .catch(err => console.log('ERROR show revenue' + err))
-          res.render('revenues/revenue',{name: foodsname, soluong: foodssl, doanhthu});
+          res.render('revenues/revenue',{name: foodsname, soluong: foodssl, doanhthu, totalHD, totaldoanhthu});
           //res.json(records2)
   
     }

@@ -11,9 +11,9 @@ function route(app) {
 
     app.use('/login',loginRouter);
     app.use('/',auth ,siteRouter);
-    app.use('/foods',foodRouter);
-    app.use('/revenue', revenueRouter);
-    app.use('/manage', manageRouter);
+    app.use('/foods',auth ,foodRouter);
+    app.use('/revenue',auth ,revenueRouter);
+    app.use('/manage',auth ,manageRouter);
 }
 
 module.exports = route;

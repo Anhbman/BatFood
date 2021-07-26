@@ -7,7 +7,7 @@ function authenToken(req, res, next){
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
         if(err){
             console.log(err);
-            res.redirect('login')
+            res.redirect('/login');
         }
         else if(data)
             next();

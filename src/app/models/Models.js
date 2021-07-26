@@ -20,7 +20,7 @@ var banpv = db.define('banpv',{
     banid: {type: DataTypes.INTEGER, allowNull: false},
     khachhangid: {type: DataTypes.INTEGER, allowNull: false},
     nhanvienid: {type: DataTypes.INTEGER, allowNull: false},
-    thoigian: {type: DataTypes.TIME, allowNull: false},
+    thoigian: {type: DataTypes.DATEONLY, allowNull: false},
     
 }, {
     freezeTableName: true,
@@ -77,6 +77,13 @@ var taikhoan =  db.define('taikhoan',{
     psw: {type: DataTypes.STRING, allowNull: false},
 }, {
     timestamps: false
+});
+
+hoadon.hasMany(banpv, {
+    foreignKey: 'phucvuid'
+});
+banpv.belongsTo(hoadon,  {
+    foreignKey: 'phucvuid'
 });
 
 
