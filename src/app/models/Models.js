@@ -20,7 +20,10 @@ var banpv = db.define('banpv',{
     banid: {type: DataTypes.INTEGER, allowNull: false},
     khachhangid: {type: DataTypes.INTEGER, allowNull: false},
     nhanvienid: {type: DataTypes.INTEGER, allowNull: false},
-    thoigian: {type: DataTypes.DATEONLY, allowNull: false},
+    thoigian: {type: DataTypes.DATEONLY, allowNull: false,
+        get: function() {
+            return moment(this.getDataValue('ngaysinh')).format('YYYY-MM-DD')
+         }},
     
 }, {
     freezeTableName: true,
@@ -31,7 +34,11 @@ var hoadon = db.define('hoadon',{
     phucvuid : {type: DataTypes.INTEGER , primaryKey: true, allowNull: false},
     nhanvienid: {type: DataTypes.INTEGER, allowNull: false},
     tongtien: {type: DataTypes.INTEGER, allowNull: false},
-    thoigian: {type: DataTypes.TIME, allowNull: false},
+    thoigian: {type: DataTypes.TIME, allowNull: false,
+        get: function() {
+            return moment(this.getDataValue('thoigian')).format('YYYY-MM-DD h:mm:ss a')
+         }
+        },
     ghichu: {type: DataTypes.TEXT},
     
 }, {
@@ -79,13 +86,27 @@ var taikhoan =  db.define('taikhoan',{
     timestamps: false
 });
 
-hoadon.hasMany(banpv, {
-    foreignKey: 'phucvuid'
-});
-banpv.belongsTo(hoadon,  {
+
+hoadon.belongsTo(banpv,  {
     foreignKey: 'phucvuid'
 });
 
+khachhang.hasMany(banpv, {
+    foreignKey: 'khachhangid',
+});
+
+monan.hasMany(phieudat, {
+    foreignKey: 'monid'
+})
+
+phieudat.belongsTo(monan,  {
+    foreignKey: 'monid'
+});
+
+
+banpv.belongsTo(khachhang,  {
+    foreignKey: 'khachhangid'
+});
 
 module.exports = {
     monan,

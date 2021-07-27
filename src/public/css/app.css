@@ -53,3 +53,26 @@ body {
   border-radius: 20px;
   box-shadow: 0px 12px 23px 0px #3e49540a;
   height: calc(100% - 30px); }
+
+@media (min-width: 992px) {
+  .container-item-chart {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%; } }
+
+@media (min-width: 768px) {
+  .container-item-char {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%; } }
+
+.container-item-chart {
+  flex-wrap: wrap; }
+
+.chart {
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-around; }

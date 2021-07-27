@@ -9,16 +9,17 @@ class SiteController{
 
       var date = new Date();
       var startDate = new Date();
-      startDate.setMonth(date.getMonth() - 1);
-      startDate.setDate(startDate.getDate() + 1);
       var endDate = new Date();
-      endDate.setDate(endDate.getDate() + 1);
       var startDate2 = new Date();
-      startDate2.setMonth(date.getMonth() - 2);
       var preMonthRev = 0;
       var thisMonthRev = 0;
       //res.json(startDate);
 
+      startDate.setMonth(date.getMonth() - 1);
+      startDate.setDate(startDate.getDate() + 1);
+      endDate.setDate(endDate.getDate() + 1);
+      startDate2.setMonth(date.getMonth() - 2);
+      
       // Tính doanh thu
       await models.hoadon.findAll({
         attributes: [

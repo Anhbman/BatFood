@@ -11,6 +11,7 @@ class ManageController{
         var khachhang;
         if(req.query.page > 0)
          start = (req.query.page-1)*pageSize;
+         
       await models.khachhang.findAndCountAll({
         order: [['diemtichluy', 'DESC']],
         offset: start,
@@ -139,12 +140,10 @@ class ManageController{
 
     async showCustomerID(req, res) {
       await Sequelize.query(`select k.khachhangid, k.hoten, k.diemtichluy, b.phucvuid, h.tongtien, to_char(h.thoigian, 'YYYY-MM-DD HH24:MI:SS') as thoigian
-                            from khachhang k, banpv b, phieudat p, hoadon h
+                            from khachhang k, banpv b, hoadon h
                             where k.khachhangid = b.khachhangid
-                            and b.phucvuid = p.phucvuid
-                            and p.phucvuid = h.phucvuid
+                            and b.phucvuid =  h.phucvuid
                             and k.khachhangid = '${req.params.id}'
-                            group by (b.phucvuid, k.khachhangid, h.tongtien, h.thoigian)
                             order by h.thoigian`)
         .then(result => {
           var customer = result[0];
