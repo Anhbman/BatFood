@@ -20,9 +20,9 @@ var banpv = db.define('banpv',{
     banid: {type: DataTypes.INTEGER, allowNull: false},
     khachhangid: {type: DataTypes.INTEGER, allowNull: false},
     nhanvienid: {type: DataTypes.INTEGER, allowNull: false},
-    thoigian: {type: DataTypes.DATEONLY, allowNull: false,
+    thoigian: {type: DataTypes.TIME, allowNull: false,
         get: function() {
-            return moment(this.getDataValue('ngaysinh')).format('YYYY-MM-DD')
+            return moment(this.getDataValue('thoigian')).format('YYYY-MM-DD h:mm:ss a')
          }},
     
 }, {
@@ -91,7 +91,12 @@ hoadon.belongsTo(banpv,  {
     foreignKey: 'phucvuid'
 });
 
+banpv.hasOne(hoadon,  {
+    foreignKey: 'phucvuid'
+});
+
 khachhang.hasMany(banpv, {
+    //as: 'donhang',
     foreignKey: 'khachhangid',
 });
 

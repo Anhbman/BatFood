@@ -21,7 +21,7 @@ db.authenticate()
   .catch(err => console.log('Error: ') + err)
 
 const app = express();
-const port = process.env.PORT ;
+const port = process.env.PORT || 3000;
 
 // Xử lý nhận dữ liệu từ form-data
 app.use(express.urlencoded());

@@ -138,26 +138,39 @@ class ManageController{
       res.redirect('/manage/personnel');
     }
 
-    async showCustomerID(req, res) {
-      await Sequelize.query(`select k.khachhangid, k.hoten, k.diemtichluy, b.phucvuid, h.tongtien, to_char(h.thoigian, 'YYYY-MM-DD HH24:MI:SS') as thoigian
-                            from khachhang k, banpv b, hoadon h
-                            where k.khachhangid = b.khachhangid
-                            and b.phucvuid =  h.phucvuid
-                            and k.khachhangid = '${req.params.id}'
-                            order by h.thoigian`)
-        .then(result => {
-          var customer = result[0];
-          var count = customer.length;
-          var total = 0;
-          var point = 0;
-          if(count > 0){
-            point = customer[0].diemtichluy
-            var name = customer[0].hoten;
-            total = customer.reduce((total, currentValue) => {
-              return total + (currentValue.tongtien);
-            },0)
+     showCustomerID(req, res) {
+      models.khachhang.findAll({
+        attributes: [
+          'khachhangid',
+          'hoten',
+          'diemtichluy'
+        ],
+        include:[
+          {
+            attributes: ['phucvuid', 'khachhangid', 'thoigian'],
+            model: models.banpv,
+            include:[
+              {
+                attributes: ['phucvuid', 'tongtien'],
+                model: models.hoadon,
+              }
+            ],
           }
-          res.render('manage/inforCustomer',{name,customer, count, total, point});
+        ],
+        where: {
+          khachhangid: `${req.params.id}`
+        },
+        order: [[models.banpv ,'thoigian', 'desc']],
+      })
+        .then(result => {
+          var name = result[0].hoten;
+          var customer = result[0].banpvs.map(currentValue => currentValue);
+          var total = result[0].banpvs.reduce((total, currentValue) => {
+            return total + currentValue.hoadon.tongtien;
+          },0);
+          var count = result[0].banpvs.length;
+          var point = result[0].diemtichluy;
+          res.render('manage/inforCustomer',{name, customer, count, total, point});
         })
         .catch(err => console.log('ERROR showCustomerID: ' + err))
     }
