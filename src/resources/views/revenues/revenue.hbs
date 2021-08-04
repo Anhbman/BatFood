@@ -26,7 +26,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="display-6 me-3">{{totalVistor}}</div>
                     <div class="d-flex align-items-center text-muted">
-                       <div class="display-6 text-muted fw-normal">0%</div>
+                       <div class="display-6 text-success fw-normal">0%</div>
                     </div>
                 </div>
                 <div class="text-xs text-muted mb-1">Previous year: 0</div>
@@ -40,7 +40,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="display-6 me-3">{{totalHD}}</div>
                     <div class="d-flex align-items-center text-danger">
-                        <div class="display-6 text-danger fw-normal">0%</div>
+                        <div class="display-6 text-success fw-normal">0%</div>
                     </div>
                 </div>
                 <div class="text-xs text-muted mb-1">Previous year: 0</div>
@@ -109,12 +109,12 @@
     </table>
 </div>
 
-<div id="demo">
+<div id="hoadon">
   <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-end">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         {{#each page}}
-        <li class="page-item"><a class="page-link" href="?page={{sum @index 1}}">{{sum @index 1}}</a></li>
+        <li class="page-item"><a class="page-link" href="/revenue/{{sum @index 1}}/#hoadon">{{sum @index 1}}</a></li>
         {{/each}}
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>

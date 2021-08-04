@@ -3,6 +3,7 @@ const route = express.Router();
 
 const foodController = require('../app/controller/FoodController');
 
+
 route.get('/stored', foodController.storedFoods);
 route.get('/create',foodController.createFood);
 route.post('/:id/insert', foodController.insert);

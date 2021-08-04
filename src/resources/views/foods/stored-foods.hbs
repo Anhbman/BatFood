@@ -1,25 +1,10 @@
 <form  class="mt-4" name="container-form" method="POST" action="/courses/handle-form-action">
     <h3>Món ăn của cửa hàng</h3>
 
-    <div class="mt-4 d-flex align-items-center">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
-        <label class="form-check-label" for="checkbox-all">
-          Chọn tất cả
-        </label>
-      </div>
-
-      <select class="form-control form-control-sm select-all-options" name="action">
-        <option value="">-- Chọn hành động --</option>
-        <option value="delete">Xoá</option>
-      </select>
-
-      <button class="btn btn-primary btn-submit btn-sm disabled ">Thực hiện</button>
-    </div>
     <table class="table mt-4">
         <thead>
             <tr>
-            <th scope="col" colspan="2">#</th>
+            <th scope="col">#</th>
             <th scope="col">
               Tên món ăn
             </th>
@@ -32,11 +17,6 @@
         <tbody>
             {{#each foods}}
             <tr>
-              <td>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="courseIDs[]" value="{{this.monid}}">
-                </div>
-              </td>
               <th scope="row">{{sum @index 1}}</th>
               <td>{{this.tenmon}}</td>
               <td>{{this.dongia}}</td>

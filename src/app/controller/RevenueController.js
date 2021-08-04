@@ -18,8 +18,9 @@ class RevenueController{
       var start = 0;
       var page = [];          // số lượng page
 
-      if(req.query.page > 0)
-        start = (req.query.page-1)*pageSize;
+      console.log(req.params);
+      if(req.params.page > 0)
+        start = (req.params.page-1)*pageSize;
 
       // Tính tổng doanh thu của quán
       var hoadonFindCount = models.hoadon.findAndCountAll({});

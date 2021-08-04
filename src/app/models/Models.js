@@ -102,7 +102,15 @@ khachhang.hasMany(banpv, {
 
 monan.hasMany(phieudat, {
     foreignKey: 'monid'
-})
+});
+
+phieudat.belongsTo(banpv, {
+    foreignKey: 'phucvuid'
+});
+
+banpv.hasMany(phieudat, {
+    foreignKey: 'phucvuid'
+});
 
 phieudat.belongsTo(monan,  {
     foreignKey: 'monid'

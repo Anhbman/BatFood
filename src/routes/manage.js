@@ -11,7 +11,7 @@ route.get('/customer/:id', manageController.showCustomerID);
 route.get('/personnel', manageController.showPersonnel);
 route.get('/personnel/create', manageController.createPersonnel);
 route.post('/customer/insert', manageController.insertCustomer);
-route.post('/personnel/:id/insert', manageController.insertPersonnel);
+route.post('/personnel/insert', manageController.insertPersonnel);
 route.get('/customer/:id/edit', manageController.editCustomer);
 route.put('/customer/:id/update', manageController.updateCustomer);
 route.get('/personnel/:id/edit', manageController.editPersonnel);

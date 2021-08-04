@@ -4,21 +4,34 @@ const models = require('../models/Models');
 class FoodController {
 
     // GET /foods/stored
-    async storedFoods(req, res){
-      await models.monan.findAll({
-              })
-                .then( result => {
-                  var foods = result.map((currentValue) => {
-                            return currentValue;
-                          });
-                  res.render('foods/stored-foods',{foods});
-                })
-                .catch(err => console.log('Error storedfood: ' + err));
-          }
+    storedFoods(req, res){
+      models.monan.findAll({})
+        .then( result => {
+          var foods = result.map((currentValue) => {
+                    return currentValue;
+                  });
+          res.render('foods/stored-foods',{foods});
+        })
+        .catch(err => console.log('Error storedfood: ' + err));
+    }
+
 
     showFoodID(req, res){
-      res.json('Mon an');
+      models.monan.findAll({
+        include:[{
+          model: models.phieudat,
+          include: [{
+            model: models.banpv
+          }]
+        }],
+        where: {
+          monid: `${req.params.id}`,
+        }
+      })
+        .then(result => res.json(result))
+        .catch(err => console.log('ERROR showFoodID: ' + err ))
     }
+
     // DELETE /foods/:id/delete
     async deleteFoods(req, res){
         await models.monan.destroy({

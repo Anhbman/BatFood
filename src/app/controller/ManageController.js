@@ -67,25 +67,17 @@ class ManageController{
       await models.khachhang.create(values)
         .then()
         .catch(err => console.log('ERROR insertCustomer: ' + err))
-      res.redirect('/manage/customer')
+      //res.redirect('/manage/customer')
+      res.redirect('/manage/customer');
     }
 
-    async createPersonnel(req, res){
-
-      await models.nhanvien.findAll()
-        .then(result => {
-          var id = result.length*10 + 1;
-          console.log('id = ' + id);
-          //res.json(result);
-          res.render('manage/createPersonnel',{id})
-        })
-        .catch(err => console.log('ERROR createPersonnel: ' + err))
-
+    createPersonnel(req, res){
+      res.render('manage/createPersonnel');
     }
 
     async insertPersonnel(req, res) {
 
-      var values = {nhanvienid: `${req.params.id}` ,hoten: `${req.body.name}`, gioitinh: `${req.body.gioitinh}`, sdt: `${req.body.sdt}`, ngaysinh: `${req.body.ngaysinh}`};
+      var values = {hoten: `${req.body.name}`, gioitinh: `${req.body.gioitinh}`, sdt: `${req.body.sdt}`, ngaysinh: `${req.body.ngaysinh}`};
       await models.nhanvien.create(values)
         .then(result => {
           //res.json(result);

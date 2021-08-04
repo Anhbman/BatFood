@@ -7,6 +7,7 @@ class SiteController{
     async show(req, res){
 
       var date = new Date();
+      //res.json(date.getHours())
       var startDate = new Date();
       var endDate = new Date();
       var startDate2 = new Date();
@@ -21,8 +22,8 @@ class SiteController{
       //res.json(startDate);
 
       startDate.setMonth(date.getMonth() - 1);
-      startDate.setDate(startDate.getDate() + 1);
-      endDate.setDate(endDate.getDate() + 1);
+      // startDate.setDate(startDate.getDate() + 1);
+      // endDate.setDate(endDate.getDate() + 1);
       startDate2.setMonth(date.getMonth() - 2);
       
       // Tính doanh thu và số lượng order
@@ -47,20 +48,20 @@ class SiteController{
       order:[['thoigian', 'ASC']]
       });
 
-      // tổng số khách hàng
-      var khachhangPrev = models.banpv.count({
-        distinct: true,
-        col: 'khachhangid',
-        where: {
-          thoigian:{
-             //startDate2, startDate
-             [Op.gte]: startDate2,
-             [Op.lte]: startDate, 
-        }
-      },
-      });
+      // tổng số khách hàng phục vụ tháng trước
+      // var khachhangPrev = models.banpv.count({
+      //   distinct: true,
+      //   col: 'khachhangid',
+      //   where: {
+      //     thoigian:{
+      //        //startDate2, startDate
+      //        [Op.gte]: startDate2,
+      //        [Op.lte]: startDate, 
+      //   }
+      // },
+      // });
 
-      // Tổng số khách hàng phục vụ
+      // Tổng số khách hàng phục vụ tháng này
       var khachhangpvNow = models.banpv.count({
         distinct: true,
         col: 'khachhangid',
@@ -73,6 +74,7 @@ class SiteController{
       },
       });
 
+      // tổng số khách hàng phục vụ tháng trước
       var khachhangpvPrev = models.banpv.count({
           distinct: true,
           col: 'khachhangid',
@@ -95,18 +97,21 @@ class SiteController{
         var resdoanhthu = await doanhthu;
 
         //res.json(resdoanhthu);
-        for(let i = 0 ; i < resdoanhthu.length; i ++){
+        for(let i = 0 ; i < resdoanhthu.length; i++){
           if (resdoanhthu[i].dataValues.thoigian.getMonth() === endDate.getMonth()) {
             thisMonthRev += resdoanhthu[i].tongtien;
             thisMonthOrder++;
+            //res.json(thisMonthRev)
           }else{
             preMonthRev += resdoanhthu[i].tongtien;
             preMonthOrder++;
           }
         }
-        preMonthOrder = ((thisMonthOrder - preMonthOrder)*100/preMonthOrder).toFixed(2);
-        preMonthRev = ((thisMonthRev - preMonthRev)*100/preMonthRev).toFixed(2);
-        thisMonthRev = thisMonthRev/1000;
+        if(preMonthOrder && preMonthRev){
+          preMonthOrder = ((thisMonthOrder - preMonthOrder)*100/preMonthOrder).toFixed(2);
+          preMonthRev = ((thisMonthRev - preMonthRev)*100/preMonthRev).toFixed(2);
+          thisMonthRev = thisMonthRev/1000;
+        }
 
       } catch (error) {
         console.log('ERROR showHome Tong tien: ' + error)
