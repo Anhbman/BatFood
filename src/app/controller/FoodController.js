@@ -16,8 +16,12 @@ class FoodController {
     }
 
 
-    showFoodID(req, res){
-      models.monan.findAll({
+    async showFoodID(req, res){
+
+      var total;
+      var name;
+
+      var monanfindall = models.monan.findAll({
         include:[{
           model: models.phieudat,
           include: [{
@@ -27,9 +31,20 @@ class FoodController {
         where: {
           monid: `${req.params.id}`,
         }
-      })
-        .then(result => res.json(result))
-        .catch(err => console.log('ERROR showFoodID: ' + err ))
+      });
+
+      try {
+        var resmonanfindall = await monanfindall;
+        name = resmonanfindall[0].tenmon
+        total = resmonanfindall[0].phieudats.reduce((total, currentValue) => {
+          return total + currentValue.soluong;
+        }, 0);
+
+      } catch (error) {
+        console.log('ERROR showFoodID: ' + error )
+      }
+
+      res.render('foods/inforFood',{name ,total});
     }
 
     // DELETE /foods/:id/delete
