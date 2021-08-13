@@ -1,3 +1,59 @@
 <h2>Thông tin món ăn </h2>
 <h4>Tên món ăn: {{name}}</h4>
 <h4>Số lượng đã gọi: {{total}}</h4>
+
+<div class="container-doanhso .container-item-char">
+        <h4>Biểu đồ thống kê doanh thu của quán trong 1 năm</h4>
+        <canvas id="myChart" width="500" height="300"></canvas>  
+</div>
+
+<script>
+     document.addEventListener("DOMContentLoaded", ()=>{
+
+
+        var xValues = ['January','February','March','April','May','June','June','August','September','October','November','December'];
+        var yValues = [];
+
+        var doanhthu = `{{month}}`;
+        doanhthu = doanhthu.split(',');
+
+        for(let i = 0; i < doanhthu.length; i++){
+            yValues.push(Number(doanhthu[i]));
+        }
+
+        //console.log(doanhthu);
+        new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+            label: 'This year',
+            fill: false,
+            lineTension: 0,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderWidth: 3,
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'round',
+            borderJoinStyle: 'round',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 3,
+            pointHitRadius: 20,
+            pointStyle: 'circle',
+            data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            scales: {
+            y: {ticks: {stepSize: 1}},
+            }
+        },
+        });
+     })
+</script>

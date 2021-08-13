@@ -20,7 +20,12 @@ class FoodController {
 
       var total;
       var name;
-
+      var month = [];
+      
+      for (let i = 0; i < 12; i++) {
+        month[i] = 0;
+      }
+      //console.log(month.length);
       var monanfindall = models.monan.findAll({
         include:[{
           model: models.phieudat,
@@ -33,6 +38,40 @@ class FoodController {
         }
       });
 
+      var monanMonth = models.phieudat.findAll({
+        raw: true,
+        attributes: [
+          [db.fn('date_part','month', db.col('thoigian')), 'month'],
+          [db.fn('sum', db.col('soluong')), 'Soluong'],
+        ],
+        include: [{
+          attributes: [
+            //[db.fn('sum', db.col('soluong')), 'Soluong'],
+          ],
+          model: models.banpv,
+        }
+        ],
+        where: {
+          monid: `${req.params.id}`,
+        },
+        group:[db.fn("date_part",'month',db.col('banpv.thoigian')), 'phieudat.monid'],
+        order:[[db.fn("date_part",'month',db.col('thoigian')), 'asc']]
+      })
+
+      try {
+        var resmonanMonth = await monanMonth;
+       var sum = 0;
+        for (const value of resmonanMonth) {
+          month[value.month - 1] = Number(value.Soluong);
+          sum += Number(value.Soluong);
+          //res.json(value);
+        }
+        //res.json(resmonanMonth);
+        console.log(resmonanMonth.length);
+      } catch (error) {
+        console.log('ERROR showFoodID1: ' + error );
+      }
+
       try {
         var resmonanfindall = await monanfindall;
         name = resmonanfindall[0].tenmon
@@ -44,7 +83,7 @@ class FoodController {
         console.log('ERROR showFoodID: ' + error )
       }
 
-      res.render('foods/inforFood',{name ,total});
+      res.render('foods/inforFood',{name ,total, month});
     }
 
     // DELETE /foods/:id/delete

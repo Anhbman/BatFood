@@ -4,6 +4,12 @@ const { Op } = require("sequelize");
 
 class SiteController{
     
+
+  logout(req, res){
+    res.clearCookie("acc");
+    res.redirect("/login");
+  }
+
     async show(req, res){
 
       var date = new Date();
@@ -19,7 +25,7 @@ class SiteController{
       var thisMonthClient = 0;
       var foods = [];
       var totalMenus = 0;
-      //res.json(startDate);
+      //res.json(endDate);
 
       startDate.setMonth(date.getMonth() - 1);
       // startDate.setDate(startDate.getDate() + 1);
@@ -29,6 +35,7 @@ class SiteController{
       // Tính doanh thu và số lượng order
 
       var doanhthu = models.hoadon.findAll({
+        raw: true,
         attributes: [
           'phucvuid',
           'tongtien',
@@ -48,19 +55,7 @@ class SiteController{
       order:[['thoigian', 'ASC']]
       });
 
-      // tổng số khách hàng phục vụ tháng trước
-      // var khachhangPrev = models.banpv.count({
-      //   distinct: true,
-      //   col: 'khachhangid',
-      //   where: {
-      //     thoigian:{
-      //        //startDate2, startDate
-      //        [Op.gte]: startDate2,
-      //        [Op.lte]: startDate, 
-      //   }
-      // },
-      // });
-
+   
       // Tổng số khách hàng phục vụ tháng này
       var khachhangpvNow = models.banpv.count({
         distinct: true,
@@ -98,15 +93,16 @@ class SiteController{
 
         //res.json(resdoanhthu);
         for(let i = 0 ; i < resdoanhthu.length; i++){
-          if (resdoanhthu[i].dataValues.thoigian.getMonth() === endDate.getMonth()) {
+          if (resdoanhthu[i].thoigian <= endDate && resdoanhthu[i].thoigian >= startDate) {
             thisMonthRev += resdoanhthu[i].tongtien;
             thisMonthOrder++;
             //res.json(thisMonthRev)
-          }else{
+          }else if(resdoanhthu[i].thoigian < startDate && resdoanhthu[i].thoigian >= startDate2){
             preMonthRev += resdoanhthu[i].tongtien;
             preMonthOrder++;
           }
         }
+        //res.json(thisMonthRev);
         if(preMonthOrder && preMonthRev){
           preMonthOrder = ((thisMonthOrder - preMonthOrder)*100/preMonthOrder).toFixed(2);
           preMonthRev = ((thisMonthRev - preMonthRev)*100/preMonthRev).toFixed(2);
