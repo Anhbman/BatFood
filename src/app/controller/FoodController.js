@@ -60,13 +60,9 @@ class FoodController {
 
       try {
         var resmonanMonth = await monanMonth;
-       var sum = 0;
         for (const value of resmonanMonth) {
           month[value.month - 1] = Number(value.Soluong);
-          sum += Number(value.Soluong);
-          //res.json(value);
         }
-        //res.json(resmonanMonth);
         console.log(resmonanMonth.length);
       } catch (error) {
         console.log('ERROR showFoodID1: ' + error );
