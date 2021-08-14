@@ -13,7 +13,6 @@ class SiteController{
     async show(req, res){
 
       var date = new Date();
-      //res.json(date.getHours())
       var startDate = new Date();
       var endDate = new Date();
       var startDate2 = new Date();

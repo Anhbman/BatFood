@@ -10,7 +10,7 @@ class RevenueController{
 
       var foodsname;          // danh sách món ăn
       var foodssl;            // số lượng từng món ăn đã bán
-      var doanhthu;           // Tổng doanh thu từng tháng
+      var doanhthu = [];           // Tổng doanh thu từng tháng
       var totalHD;            // tổng hoá đơn đã bán
       var totaldoanhthu;      // Tổng doanh thu 
       var totalVistor = 0;    // Tổng khách hàng
@@ -18,7 +18,6 @@ class RevenueController{
       var start = 0;
       var page = [];          // số lượng page
 
-      console.log(req.params);
       if(req.params.page > 0)
         start = (req.params.page-1)*pageSize;
 
@@ -74,12 +73,15 @@ class RevenueController{
         limit: pageSize
       })
 
-      // Tính doanh thu hàng tháng
-      var doanhthuthang = Sequelize.query(`select sum(tongtien) as doanhthu
-        from hoadon
-        group by date_part('month',thoigian)
-        order by date_part('month',thoigian) asc`);
-
+      var doanhthuthang = models.hoadon.findAll({
+        raw: true,
+        attributes: [
+          [Sequelize.fn("date_part",'month',Sequelize.col('thoigian')), 'month'],
+          [Sequelize.fn('sum', Sequelize.col('tongtien')), 'doanhthu'],
+        ],
+        group:[Sequelize.fn("date_part",'month',Sequelize.col('thoigian'))],
+        order:[[Sequelize.fn("date_part",'month',Sequelize.col('thoigian')), 'asc']]
+      })
       
       // Tính tổng doanh thu của quán
       try {
@@ -141,13 +143,18 @@ class RevenueController{
         console.log('ERROR hoadonfindAndCountAll' + error);
       }
       
-      // Tính doanh thu tháng
       try {
 
+        for(var i = 0; i < 12 ; i++){
+          doanhthu[i] = 0;
+        }
         var resdoanhthuthang = await doanhthuthang;
-        doanhthu = resdoanhthuthang[0].map(currentValue => {
-          return Number(currentValue.doanhthu);
-        });
+        for (const value of resdoanhthuthang) {
+          doanhthu[value.month - 1] = value.doanhthu;
+        }
+        // doanhthu = resdoanhthuthang.map(currentValue => {
+        //   return Number(currentValue.doanhthu);
+        // });
       } catch (error) {
         console.log('ERROR doanhthuthang' + error)
       }
