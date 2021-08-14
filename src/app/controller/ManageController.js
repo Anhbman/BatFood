@@ -79,9 +79,7 @@ class ManageController{
 
       var values = {hoten: `${req.body.name}`, gioitinh: `${req.body.gioitinh}`, sdt: `${req.body.sdt}`, ngaysinh: `${req.body.ngaysinh}`};
       await models.nhanvien.create(values)
-        .then(result => {
-          //res.json(result);
-        })
+        .then()
         .catch(err => console.log('ERROR insertPersonnel: ' + err))
       res.redirect('/manage/personnel');
     }
