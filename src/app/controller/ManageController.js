@@ -91,7 +91,6 @@ class ManageController{
       })
         .then(result => {
           res.render('manage/editCustomer',{khachhang : result[0]});
-          //res.json(result)
         })
         .catch(err => console.log('ERROR editCustomer: ' + err))
     }
