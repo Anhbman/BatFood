@@ -9,28 +9,47 @@ class ManageController{
         var start = 0;
         var page = [];
         var khachhang;
-        if(req.query.page > 0)
-         start = (req.query.page-1)*pageSize;
-         
-      await models.khachhang.findAndCountAll({
+
+      var countKhachHang = models.khachhang.count();
+
+      try {
+        var resCount = await countKhachHang;
+      } catch (error) {
+        console.log("ERROR countKhachHang: " + error);
+      }
+
+      var pageNumber = Math.ceil( resCount/pageSize );
+      start = (req.query.page - 1)*pageSize;
+
+      if(req.query.page === 'max' || req.query.page > pageNumber)
+        start = (pageNumber-1)*pageSize;
+      if(req.query.page === undefined)
+        start = 0;   
+      
+      var dataKhachHang = models.khachhang.findAndCountAll({
+        raw: true,
         order: [['diemtichluy', 'DESC']],
         offset: start,
         limit: pageSize
-      })
-        .then( result => {
-          var count = result.count/pageSize;
-          for (let i = 0; i < count; i++) {
-               page.push(i);
-          }
-          khachhang = result.rows.map(currentValue => {
-            currentValue.dataValues.stt = start + 1;
-            return currentValue.dataValues;
-          });
-          //res.json(result)
-        })
-        .catch(err => console.log('Error showCustomer: ' + err))
-        res.render('manage/customer',{khachhang, page});
-        //res.json(khachhang);
+      });
+
+      try {
+        var resData = await dataKhachHang;
+
+        var count = resData.count/pageSize;
+
+        for (let i = 0; i < count; i++) {
+              page.push(i);
+        }
+        khachhang = resData.rows.map(currentValue => {
+          currentValue.stt = start + 1;
+          return currentValue;
+        });
+      } catch (error) {
+        console.log("ERROR dataKhachHang: " + error);
+      }
+
+      res.render('manage/customer',{khachhang, page});
     }
 
     async showPersonnel(req, res){
@@ -38,24 +57,45 @@ class ManageController{
         var start = 0;
         var page = [];
         var nhanvien;
-        if(req.query.page > 0)
-         start = (req.query.page-1)*pageSize;
-      await models.nhanvien.findAndCountAll({
+
+      var countPer = models.nhanvien.count({});
+
+
+      try {
+        var resCount = await countPer;
+      } catch (error) {
+        console.log('ERROR countPer: '+ error);
+      }
+
+      var pageNumber = Math.ceil( resCount/pageSize );
+
+      start = (req.query.page - 1)*pageSize;
+      if(req.query.page === 'max' || req.query.page > pageNumber)
+        start = (pageNumber-1)*pageSize;
+      if(req.query.page === undefined)
+        start = 0;
+      
+      var dataNhanVien = models.nhanvien.findAndCountAll({
+        raw: true,
         offset: start,
         limit: pageSize
-      })
-        .then(result => {
-          var count = result.count/pageSize;
-          for (let i = 0; i < count; i++) {
-               page.push(i);
-          }
-          nhanvien = result.rows.map(currentValue => {
-            currentValue.dataValues.stt = start + 1;
-            return currentValue.dataValues;
-          });
-        })
-        .catch(err => console.log('Error showPersonnel: ' + err))
-        res.render('manage/personnel',{nhanvien, page})
+      });
+      
+      try {
+        var resNhanVien = await dataNhanVien;
+        var count = resNhanVien.count/pageSize;
+        for (let i = 0; i < count; i++) {
+              page.push(i);
+        }
+        nhanvien = resNhanVien.rows.map(currentValue => {
+          currentValue.stt = start + 1;
+          return currentValue;
+        });
+      } catch (error) {
+        console.log('ERROR dataNhanVien:' + error);
+      }
+
+      res.render('manage/personnel',{nhanvien, page})
     }
 
     async createCustomer(req, res){
@@ -68,7 +108,7 @@ class ManageController{
         .then()
         .catch(err => console.log('ERROR insertCustomer: ' + err))
       //res.redirect('/manage/customer')
-      res.redirect('/manage/customer');
+      res.redirect('/manage/customer?page=max');
     }
 
     createPersonnel(req, res){
@@ -81,7 +121,7 @@ class ManageController{
       await models.nhanvien.create(values)
         .then()
         .catch(err => console.log('ERROR insertPersonnel: ' + err))
-      res.redirect('/manage/personnel');
+      res.redirect('/manage/personnel?page=max');
     }
 
     async editCustomer(req, res){
@@ -102,11 +142,10 @@ class ManageController{
       await models.khachhang.update(values,condition)
         .then()
         .catch(err => console.log('ERROR updateCustomer: ' + err))
-      res.redirect('/manage/customer')
+      res.redirect('/manage/customer?page=max');
     }
 
     async editPersonnel(req, res){
-
       await models.nhanvien.findAll({
         where: {nhanvienid: `${req.params.id}`}
       })
@@ -124,10 +163,10 @@ class ManageController{
       await models.nhanvien.update(values,condition)
         .then()
         .catch(err => console.log('ERROR updatePersonnel: ' + err))
-      res.redirect('/manage/personnel');
+      res.redirect('/manage/personnel?page=max');
     }
 
-     showCustomerID(req, res) {
+    showCustomerID(req, res) {
       models.khachhang.findAll({
         attributes: [
           'khachhangid',
@@ -151,17 +190,17 @@ class ManageController{
         },
         order: [[models.banpv ,'thoigian', 'desc']],
       })
-        .then(result => {
-          var name = result[0].hoten;
-          var customer = result[0].banpvs.map(currentValue => currentValue);
-          var total = result[0].banpvs.reduce((total, currentValue) => {
-            return total + currentValue.hoadon.tongtien;
-          },0);
-          var count = result[0].banpvs.length;
-          var point = result[0].diemtichluy;
-          res.render('manage/inforCustomer',{name, customer, count, total, point});
-        })
-        .catch(err => console.log('ERROR showCustomerID: ' + err))
+      .then(result => {
+        var name = result[0].hoten;
+        var customer = result[0].banpvs.map(currentValue => currentValue);
+        var total = result[0].banpvs.reduce((total, currentValue) => {
+          return total + currentValue.hoadon.tongtien;
+        },0);
+        var count = result[0].banpvs.length;
+        var point = result[0].diemtichluy;
+        res.render('manage/inforCustomer',{name, customer, count, total, point});
+      })
+      .catch(err => console.log('ERROR showCustomerID: ' + err))
     }
 
     async deletePersonnel(req, res) {
