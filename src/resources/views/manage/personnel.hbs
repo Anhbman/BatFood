@@ -107,45 +107,10 @@
             console.log(courseID);
         })
 
-        
-        console.log('id = ' + courseID)
         btnDeltete.onclick = () => {
             deleteForm.action = `personnel/${courseID}?_method=DELETE`;
             deleteForm.submit();
         }
 
-        // click checkbox all
-       checkboxAll.onchange = () => {
-         itemCheckbox.prop("checked", checkboxAll.checked);
-          renderSubmitBtn();
-       };
-
-        // item click checkbox
-        for(let i = 0; i < itemCheckbox.length; i++){
-          itemCheckbox[i].onchange = ()=>{
-          var allItemchecked = itemCheckbox.length === $('input[name="courseIDs[]"]:checked').length
-          checkboxAll.checked = allItemchecked;
-          renderSubmitBtn()
-          }
-        }
-
-        btnSubmit.click((e) => {
-          //Huỷ bỏ hành vi mặc định
-          e.preventDefault();
-          var isSubmitable = !btnSubmit.hasClass("disabled");
-          if(isSubmitable){
-            containerForm.submit();
-          }
-        });
-
-        //button submit re-render
-        function renderSubmitBtn() {
-          var checkedCount =  $('input[name="courseIDs[]"]:checked').length
-          if(checkedCount > 0){
-            btnSubmit.removeClass("disabled");
-          }else{
-            btnSubmit.addClass("disabled");
-          }
-        }
     });
 </script> 

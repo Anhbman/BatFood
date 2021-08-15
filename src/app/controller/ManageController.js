@@ -1,5 +1,6 @@
 const models = require('../models/Models');
 const Sequelize = require('../../config/db/index');
+const { render } = require('node-sass');
 
 class ManageController{
    
@@ -215,13 +216,18 @@ class ManageController{
     }
 
     async deleteCustomer(req, res) {
+
+      var Err = [];
       await models.khachhang.destroy({
         where: {
           khachhangid: `${req.params.id}`
         }
       })
         .then()
-        .catch(err => console.log('ERROR deleteCustomer: ' + err))
+        .catch(err => {
+          console.log('ERROR deleteCustomer: ' + err);
+          Err.push(err);
+        })
       res.redirect(`back`)
     }
 }
