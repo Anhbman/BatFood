@@ -10,7 +10,6 @@ var monan = db.define('monan',{
     dongia: {type: DataTypes.INTEGER, allowNull: false},
     maloai: {type: DataTypes.STRING},
     img   : {type: DataTypes.TEXT},
-    cachnau: {type: DataTypes.TEXT},
 }, {
     timestamps: false
 });

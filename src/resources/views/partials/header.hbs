@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">BatFood</a>
+  <div class="container">
+    <a class="navbar-brand" href="/">BatFood</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,25 +11,26 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/foods/stored">Link</a>
+        <a class="nav-link" href="/foods/stored">Foods</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/revenue">revenue</a>
+        <a class="nav-link" href="/revenue">Revenue</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Quản lý
+          Manage
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/manage/customer">Khách hàng</a>
-          <a class="dropdown-item" href="/manage/personnel">Nhân viên</a>
+          <a class="dropdown-item" href="/manage/customer">Customer</a>
+          <a class="dropdown-item" href="/manage/personnel">Staff</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
       <li class="nav-item">
-       <a class="nav-link active" href="/logout">logout</a>
+       <a class="nav-link active" href="/logout">Logout</a>
       </li>
     </ul>
+  </div>
   </div>
 </nav>

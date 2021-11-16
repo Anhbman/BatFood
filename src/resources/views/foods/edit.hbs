@@ -1,18 +1,18 @@
 <div class="mt-4">
-    <h3>Thông tin món ăn</h3>
+    <h3>Food information</h3>
     <form method="POST" action="/foods/{{food.monid}}?_method=PUT">
         <div class="form-group">
-            <label for="name">Tên món ăn</label>
+            <label for="name">Name</label>
             <input type="text" class="form-control" value="{{food.tenmon}}" id="name" name="name">
         </div>
          <div class="form-group">
-            <label for="description">Đơn giá</label>
+            <label for="description">Price</label>
             <input class="form-control" id="dongia" name="dongia" value="{{food.dongia}}">
         </div>
          <div class="form-group">
             <label for="videoID">img</label>
             <input type="text" class="form-control" value="{{food.img}}" id="img" name="img">
         </div>
-        <button type="submit" class="btn btn-primary">Lưu lại</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>

@@ -25,14 +25,15 @@ class SiteController{
       var foods = [];
       var totalMenus = 0;
       //res.json(endDate);
-
+      startDate.setFullYear(2020);
+      startDate2.setFullYear(2020);
+      endDate.setFullYear(2020);
       startDate.setMonth(date.getMonth() - 1);
-      // startDate.setDate(startDate.getDate() + 1);
-      // endDate.setDate(endDate.getDate() + 1);
+      //startDate.setDate(startDate.getDate() + 1);
+      //endDate.setDate(endDate.getDate() + 1);
       startDate2.setMonth(date.getMonth() - 2);
       
       // Tính doanh thu và số lượng order
-
       var doanhthu = models.hoadon.findAll({
         raw: true,
         attributes: [
@@ -90,7 +91,6 @@ class SiteController{
         
         var resdoanhthu = await doanhthu;
 
-        //res.json(resdoanhthu);
         for(let i = 0 ; i < resdoanhthu.length; i++){
           if (resdoanhthu[i].thoigian <= endDate && resdoanhthu[i].thoigian >= startDate) {
             thisMonthRev += resdoanhthu[i].tongtien;
@@ -107,15 +107,19 @@ class SiteController{
           preMonthRev = ((thisMonthRev - preMonthRev)*100/preMonthRev).toFixed(2);
           thisMonthRev = thisMonthRev/1000;
         }
-
       } catch (error) {
         console.log('ERROR showHome Tong tien: ' + error)
       }
 
       // Tính tổng số khách hàng
+      var phantram = 0;
       try {
         var preMonthClient = await khachhangpvPrev;
         var thisMonthClient = await khachhangpvNow;
+        // res.json(preMonthClient);
+        if(preMonthClient!==0){
+          phantram = (thisMonthClient - preMonthClient)*100/preMonthClient;
+        }
 
       } catch (error) {
         console.log('ERROR tongkhachhang: ' + error)
@@ -133,7 +137,7 @@ class SiteController{
         console.log('Error storedfood: ' + error)
       }
 
-      res.render('home',{foods, thisMonthRev, preMonthRev, totalMenus, thisMonthOrder, preMonthOrder, thisMonthClient, preMonthClient});
+      res.render('home',{foods, thisMonthRev, preMonthRev, totalMenus, thisMonthOrder, preMonthOrder, thisMonthClient, phantram});
     }
 }
 
