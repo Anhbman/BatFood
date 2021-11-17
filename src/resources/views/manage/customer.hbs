@@ -1,21 +1,21 @@
 <form  class="mt-4" name="container-form" method="POST" action="/courses/handle-form-action">
-    <h3>Danh sách khách hàng</h3>
+    <h3>Customer</h3>
 
     <table class="table mt-4">
         <thead>
             <tr>
             <th scope="col">#</th>
             <th scope="col">
-              Tên khách hàng
+              Name
             </th>
             <th scope="col">
-              giới tính
+              Gender
             </th>
             <th scope="col">
-             sđt
+             Phone
             </th>
             <th scope="col">
-             Điểm tích luỹ
+             Loyalty point
              </th>
             <th></th>
             </tr>
@@ -33,8 +33,8 @@
               <td>{{this.sdt}}</td>
               <td>{{this.diemtichluy}}</td>
               <td>
-                  <a href="/manage/customer/{{this.khachhangid}}/edit" class="btn btn-link">Sửa</a>
-                  <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this.khachhangid}}" data-target="#delete-course-modal">Xoá</a>
+                  <a href="/manage/customer/{{this.khachhangid}}/edit" class="btn btn-link">Edit</a>
+                  <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this.khachhangid}}" data-target="#delete-course-modal">Delete</a>
               </td>
             </tr>
 
@@ -42,7 +42,7 @@
             <tr>
               <td colspan="5" class="text-center">
                 Chưa có khách hàng nào
-                 <a href="customer/create">Thêm khách hàng</a>
+                 <a href="customer/create">Add customer</a>
               </td>
             </tr>
             {{/each}}
@@ -73,17 +73,17 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Xoá khách hàng</h5>
+        <h5 class="modal-title">Delete</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Bạn chắc chắn muốn xoá khách hàng này này?</p>
+        <p>Delete confirm?</p>
       </div>
       <div class="modal-footer">
-        <button id="btn-delete-course" type="button" class="btn btn-primary">Xoá bỏ</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+        <button id="btn-delete-course" type="button" class="btn btn-primary">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
       </div>
     </div>
   </div>

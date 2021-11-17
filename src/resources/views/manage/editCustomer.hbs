@@ -1,8 +1,8 @@
 <div class="mt-4">
-    <h3>Chỉnh sửa thông tin khách hàng</h3>
+    <h3>Edit Customer</h3>
     <form method="POST" action="/manage/customer/{{khachhang.khachhangid}}/update?_method=PUT">
         <div class="form-group">
-            <label for="name">Tên khách hàng</label>
+            <label for="name">Name</label>
             <input type="text" class="form-control" id="name" value="{{khachhang.hoten}}" name="name" >
         </div>
         {{!-- <div class="form-group">
@@ -10,20 +10,20 @@
             <input type="text" class="form-control" id="id" name="id" value="{{result">
         </div> --}}
          <div class="form-group">
-            <label for="description">giới tính   :</label>
+            <label for="description">Gender :</label>
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" checked="checked" id="customRadioInline1" name="gioitinh" value="F" class="custom-control-input form-control">
-                <label class="custom-control-label" for="customRadioInline1">Nam</label>
+                <label class="custom-control-label" for="customRadioInline1">Male</label>
             </div>
                 <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="customRadioInline2" name="gioitinh" value="M" class="custom-control-input form-control">
-                <label class="custom-control-label" for="customRadioInline2">Nữ</label>
+                <label class="custom-control-label" for="customRadioInline2">Female</label>
             </div>
         </div>
          <div class="form-group">
-            <label for="sdt">số điện thoại</label>
+            <label for="sdt">Phone</label>
             <input type="text" class="form-control" id="sdt" value="{{khachhang.sdt}}" name="sdt">
         </div>
-        <button type="submit" class="btn btn-primary">Lưu lại</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
