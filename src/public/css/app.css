@@ -76,3 +76,7 @@ body {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   justify-content: space-around; }
+
+.form-login {
+  width: fit-content;
+}
