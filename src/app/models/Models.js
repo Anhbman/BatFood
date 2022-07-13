@@ -72,10 +72,8 @@ var phieudat = db.define('phieudat',{
     phucvuid : {type: DataTypes.INTEGER, primaryKey: true, allowNull: false},
     monid: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false},
     soluong: {type: DataTypes.INTEGER, allowNull: false},
+    trangthai: {type: DataTypes.BOOLEAN},
     ghichu: {type: DataTypes.TEXT},
-    
-}, {
-    timestamps: false
 });
 
 var taikhoan =  db.define('taikhoan',{

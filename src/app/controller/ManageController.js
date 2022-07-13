@@ -1,6 +1,5 @@
 const models = require('../models/Models');
 const Sequelize = require('../../config/db/index');
-const { render } = require('node-sass');
 
 class ManageController{
    
@@ -167,7 +166,7 @@ class ManageController{
       res.redirect('/manage/personnel?page=max');
     }
 
-    showCustomerID(req, res) {
+    showCustomerID (req, res) {
       models.khachhang.findAll({
         attributes: [
           'khachhangid',

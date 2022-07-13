@@ -1,10 +1,10 @@
 const models = require('../models/Models');
 const Sequelize = require('../../config/db/index');
 
-class RevenueController{
+class RevenueController {
 
     // GET revenue
-    async show(req, res){
+    async show(req, res) {
 
       console.time('taskA');
 
@@ -149,9 +149,7 @@ class RevenueController{
           doanhthu[i] = 0;
         }
         var resdoanhthuthang = await doanhthuthang;
-        for (const value of resdoanhthuthang) {
-          doanhthu[value.month - 1] = value.doanhthu;
-        }
+        
         // doanhthu = resdoanhthuthang.map(currentValue => {
         //   return Number(currentValue.doanhthu);
         // });
