@@ -54,7 +54,8 @@ class RevenueController {
         attributes: [
           'phucvuid',
           'thoigian',
-          'tongtien'
+          'tongtien',
+          'trangthai'
         ],
         include:[
           {
@@ -139,6 +140,8 @@ class RevenueController {
         for (let i = 0; i < count; i++) {
             page.push(i);
         };
+
+        // res.json(hoadon)
       } catch (error) {
         console.log('ERROR hoadonfindAndCountAll' + error);
       }
@@ -150,12 +153,14 @@ class RevenueController {
         }
         var resdoanhthuthang = await doanhthuthang;
         
-        // doanhthu = resdoanhthuthang.map(currentValue => {
-        //   return Number(currentValue.doanhthu);
-        // });
+        doanhthu = resdoanhthuthang.map(currentValue => {
+          return Number(currentValue.doanhthu);
+        });
       } catch (error) {
-        console.log('ERROR doanhthuthang' + error)
+        console.log('ERROR doanhthuthang' + error);
       }
+
+      // res.json(hoadon);
       
       res.render('revenues/revenue',{name: foodsname, soluong: foodssl, doanhthu, totalHD, totaldoanhthu, totalVistor, hoadon, page});
       console.timeEnd("taskA");

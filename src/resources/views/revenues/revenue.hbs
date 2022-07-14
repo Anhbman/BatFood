@@ -79,7 +79,10 @@
             <th scope="col">
              Date
             </th>
-            <thscope="col">
+            <th scope="col">
+             Status
+            </th>
+            <th scope="col">
             </th>
             </tr>
         </thead>
@@ -93,8 +96,15 @@
               <td>{{this.banpv.khachhang.hoten}}</td>
               <td>{{this.tongtien}}</td>
               <td>{{this.thoigian}}</td>
+              {{#if this.trangthai}}
+                <td><span style="color: rgb(65, 190, 113);">Đã thanh toán</span></td>
+              {{else}}
+                <td><span style="color: red;">Chưa thanh toán</span></td>
+              {{/if}}
+              <td>{{this.thoigian}}</td>
               <td>
-                </td>
+                <a href="/order/bill/{{this.phucvuid}}" class="btn btn-info">Chi tiết</a>
+            </td>
             </tr>
 
             {{else}}

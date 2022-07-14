@@ -6,7 +6,7 @@
             <tr>
             <th scope="col">#</th>
             <th scope="col">
-              ID
+              Khách hàng
             </th>
             <th scope="col">
               món ăn
@@ -21,35 +21,28 @@
             </tr>
         </thead>
         <tbody>
-            {{#each order}}
+            {{#each result}}
             <tr>
               <th scope="row">{{sum @index 1}}</th>
                 <td>
-                  <a href="customer/{{this.phucvuid}}">
-                  {{this.phucvuid}}
-                  </a>
-                  </td>
-              <td>{{this.monan}}</td>
-              <td>{{this.soluong}}</td>
-              <td>{{this.time}}</td>
-              <td>
-                  <a href="/manage/customer/{{this.khachhangid}}/edit" class="btn btn-link">Edit</a>
-                  <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this.khachhangid}}" data-target="#delete-course-modal">Delete</a>
-              </td>
+                  {{'khachhang.hoten'}}
+                </td>
+                <td>{{'phieudats.monan'}}</td>
+                <td>{{'phieudats.soluong'}}</td>
+                <td>{{this.time}}</td>
+                <td>
+                  <a href="/order/success/{{this.phucvuid}}" class="btn btn-success">Xác nhận</a>
+                  <a href="{{this.phucvuid}}" class="btn btn-info">Chi tiết</a>
+                </td>
             </tr>
-
             {{else}}
             <tr>
               <td colspan="5" class="text-center">
-                Chưa có khách hàng nào
-                 <a href="customer/create">Add customer</a>
+                Không có order nào
               </td>
             </tr>
             {{/each}}
             <td>
-              <a href="customer/create">
-                <span class="oi oi-plus"></span>
-              </a>
             </td>
         </tbody>
     </table>

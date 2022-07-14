@@ -1,0 +1,40 @@
+<h2>Customer: <span style="color: brown;">{{nameCustomer}}</span></h2>
+
+<div class="mt-4">
+
+<h4>Order</h4>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Món ăn</th>
+        <th scope="col">số lượng</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each result}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td>{{'monan.tenmon'}}</td>
+        <td>{{this.soluong}}</td>
+      </tr>
+      {{else}}
+        <tr>
+          <td colspan="5" class="text-center">
+            Chưa có Thông tin về đơn hàng
+              {{!-- <a href="customer/create">Thêm khách hàng</a> --}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Total</th>
+        <td>{{totalfood}}</td>
+        <td>{{countFood}}</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+  <a href="/order/success/{{this.phucvuid}}" class="btn btn-success">Xác nhận</a>
+</div>

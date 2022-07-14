@@ -39,6 +39,7 @@ var hoadon = db.define('hoadon',{
          }
         },
     ghichu: {type: DataTypes.TEXT},
+    trangthai: {type: DataTypes.INTEGER},
     
 }, {
     timestamps: false
@@ -74,6 +75,8 @@ var phieudat = db.define('phieudat',{
     soluong: {type: DataTypes.INTEGER, allowNull: false},
     trangthai: {type: DataTypes.BOOLEAN},
     ghichu: {type: DataTypes.TEXT},
+}, {
+    freezeTableName: true,
 });
 
 var taikhoan =  db.define('taikhoan',{

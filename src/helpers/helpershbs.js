@@ -24,5 +24,13 @@ module.exports = {
         return `<a href="?_sort&column=${field}&type=${type}">
         <span class="${icon}"></span>
         </a>`;
-    }
+    },
+
+    check: (value) => {
+        console.log(value);
+        if (value == true) {
+            return "Đã thanh toán";
+        }
+        return "Chưa thanh toán"
+    },
 };
